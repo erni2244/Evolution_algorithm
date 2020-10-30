@@ -1,2 +1,3 @@
 # Project exclude paths
 /out/
+/groovylab-preview/src/org/math/array/
