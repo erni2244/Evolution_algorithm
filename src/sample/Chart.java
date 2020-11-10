@@ -33,8 +33,8 @@ public class Chart extends JPanel {
         double[] y=new double[lista.size()];
         double[] z=new double[lista.size()];
         for(int i=0;i<lista.size();i++){
-            x[i]=lista.get(i).getX_value();
-            y[i]=lista.get(i).getY_value();
+            x[i]=lista.get(i).getPunkt(0);
+            y[i]=lista.get(i).getPunkt(1);
             z[i]=f1(x[i],y[i]);
         }
 

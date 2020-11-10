@@ -13,7 +13,7 @@ import javafx.scene.input.KeyEvent;
 public class Controller {
 
     private boolean thread_start=false;
-    private Chart chart;
+    private Chart2D chart;
     private Evolution evolution=new Evolution();
     @FXML
     private SwingNode mojeswing;
@@ -32,7 +32,7 @@ public class Controller {
 
     @FXML
     public void initialize(){
-            chart=new Chart();
+            chart=new Chart2D();
             mojeswing.setContent(chart);
     }
 
@@ -57,12 +57,12 @@ public class Controller {
             }
         });
     }
-    // blokada na tylko double
+    // blokada na tylko double razem z ujemnymi
     public void punkt0_text_key_pressed(KeyEvent keyEvent) {
         punkt0_text.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (!t1.matches("\\d{0,7}([\\.]\\d{0,4})?"))
+                if (!t1.matches("[\\-]{0,1}\\d{0,7}([\\.]\\d{0,4})?"))
                     punkt0_text.setText(s);
             }
         });

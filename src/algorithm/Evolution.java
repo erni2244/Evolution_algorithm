@@ -37,11 +37,12 @@ public class Evolution {
             losuj_populacje_o_wymiaze();
         mutacja();
         krzyzowanie_wybor_genu();
+        //krzyzowanie_srednia_genu();
         selekcja_ruletkowa();
     }
 
-    private double losoj_nowy(){
-        return (new Random().nextGaussian()*sigma)+mediana_normrand;  //normalny
+    private double losoj_nowy(double mediana){
+        return (new Random().nextGaussian()*sigma)+mediana;  //normalny
         //return random()*(abs(min_value-max_value))+min_value;   //jednostajny
     }
 
@@ -53,7 +54,7 @@ public class Evolution {
         for(int i=0;i<wielkosc_populacji_poczatkowa;i++){
             lista_punktow=new ArrayList<>();
             for(int j=0;j<wymiar;j++){
-                lista_punktow.add(losoj_nowy());
+                lista_punktow.add(losoj_nowy(mediana_normrand));
             }
             ob=new Object_pop(lista_punktow,sigma);
             lista_osobnikow.add(ob);
@@ -62,8 +63,13 @@ public class Evolution {
 
     //funkcja mutuje części osobników (czasem jeden osobnik może zmutować kilka razy !!!)
     private void mutacja(){
+        int a;
+        int b;
         for(int i=0;i<lista_osobnikow.size()*wielkosc_mutacji;i++){
-            lista_osobnikow.get((int) round(random()*(lista_osobnikow.size()-1))).setPunkt(losoj_nowy(),(int) round(random()*(wymiar-1)));
+            a=(int) round(random()*(lista_osobnikow.size()-1));
+            b=(int) round(random()*(wymiar-1));
+            lista_osobnikow.get(a).setPunkt(losoj_nowy(lista_osobnikow.get(a).getPunkt(b)),b);
+            lista_osobnikow.get(a).funkcja_oceny();
         }
     }
 
@@ -76,11 +82,13 @@ public class Evolution {
         for(int j=0;j<wielkosc_populacji_poczatkowa*szansa_na_skrzyzowanie;j++) {
             object1 = (int) round(random() * (wielkosc_populacji_poczatkowa - 1));
             object2 = (int) round(random() * (wielkosc_populacji_poczatkowa - 1));
+            list=new ArrayList<>();
             for (int i = 0; i < wymiar; i++)
                 if (random() < 0.5)
                     list.add(lista_osobnikow.get(object1).getPunkt(i));
-                else
+                 else
                     list.add(lista_osobnikow.get(object2).getPunkt(i));
+
             lista_osobnikow.add(new Object_pop(list, sigma));
         }
     }
@@ -101,33 +109,39 @@ public class Evolution {
     }
 
     private void selekcja_ruletkowa(){
-        //int size=lista_osobnikow.size();
         List<Double> ruletka=new ArrayList<>();
         List<Object_pop> ocaleni=new ArrayList<>();
-        double sum=lista_osobnikow.get(0).getOcena();
-        ruletka.add(lista_osobnikow.get(0).getOcena());
+        double sum=0;
 
-        for(int i=1;i<lista_osobnikow.size();i++){
+        for(int i=0;i<lista_osobnikow.size();i++){
             ruletka.add(lista_osobnikow.get(i).getOcena());
-            sum+=lista_osobnikow.get(i).getOcena();
+            lista_osobnikow.get(i).funkcja_oceny();
+            //sum+=lista_osobnikow.get(i).getOcena();
         }
 
         double actual_sum,los;
         while (ocaleni.size()<wielkosc_populacji_poczatkowa){
+            sum=0;
+            for(int i=0;i<lista_osobnikow.size();i++)
+                sum+=lista_osobnikow.get(i).getOcena();
+
             los=random()*sum;
             actual_sum=0;
             for(int j=0;j<lista_osobnikow.size();j++){
                 actual_sum+=ruletka.get(j);
                 if(los<=actual_sum) {
+
                     ocaleni.add(lista_osobnikow.get(j));
-                    sum-=ruletka.get(j);
+                    //sum-=ruletka.get(j);
                     lista_osobnikow.remove(j);
                     ruletka.remove(j);
                     break;
                 }
             }
         }
+        System.out.println("ok");
         lista_osobnikow=ocaleni;
     }
+
 
 }
