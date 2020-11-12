@@ -123,10 +123,12 @@ public class Controller {
             Thread thread=new Thread(){
                 public void run(){
                     while (thread_start==true){
-                        evolution.iteracja();
+                        if(evolution.iteracja())
+                            break;
                         chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma());
                         try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
                     }
+                    thread_start=false;
                 }
             };
             thread.start();
