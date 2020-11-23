@@ -12,7 +12,7 @@ public class Chart2D extends JPanel {
 
 
     Plot2DPanel panel;
-    private static double sigma=1;
+    private double sigma=4;
 
     public Chart2D() {
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -69,6 +69,7 @@ public class Chart2D extends JPanel {
 
     private double[] fun(double[] x){
         double[] y=new double[x.length];
+        System.out.println(""+sigma);
         for(int i=0;i<x.length;i++)
             y[i]=exp(-5*(x[i]*x[i]))+2*exp(-5*(pow(x[i]-sigma,2)  ));
         return y;

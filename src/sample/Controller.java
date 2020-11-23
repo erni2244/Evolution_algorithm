@@ -112,6 +112,7 @@ public class Controller {
         try { evolution.setMediana_normrand(Double.parseDouble(punkt0_text.getText())); }catch (Exception e){evolution.setMediana_normrand(0);}
         try { evolution.setSzansa_na_skrzyzowanie(Double.parseDouble(krzyzowanie_text.getText())); }catch (Exception e){evolution.setSzansa_na_skrzyzowanie(0.5);}
         try { evolution.setWielkosc_mutacji(Double.parseDouble(mutacja_text.getText())); }catch (Exception e){evolution.setWielkosc_mutacji(0.25);}
+        try { evolution.setSigma(Double.parseDouble(sigma_text.getText())); }catch (Exception e){evolution.setSigma(1);}
         evolution.losuj_populacje_o_wymiaze();
         chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma());
     }

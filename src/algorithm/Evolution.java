@@ -26,6 +26,7 @@ public class Evolution {
     public void setMediana_normrand(double mediana_normrand) { this.mediana_normrand = mediana_normrand; }
     public void setSzansa_na_skrzyzowanie(double szansa_na_skrzyzowanie) { this.szansa_na_skrzyzowanie = szansa_na_skrzyzowanie; }
     public void setWielkosc_mutacji(double wielkosc_mutacji) { this.wielkosc_mutacji = wielkosc_mutacji; }
+    public void setSigma(double sigma) { this.sigma = sigma; }
 
     public List<Object_pop> getLista_osobnikow() { return lista_osobnikow; }
     public double getMin_value() { return min_value; }
@@ -48,7 +49,7 @@ public class Evolution {
             return false;
 
     }
-    
+
 
     private boolean cross_saddle(double procent){
         int ile_przeszło=0;
@@ -91,26 +92,6 @@ public class Evolution {
         }
     }
 
-    //*******************************************nie uzywane narazie (opcjonalne)***********************************************************
-    //funkcja krzyżowania osobników przez wybór genów od rodziców i danie ich potomstwu (czasem jeden osobnik może skrzyżować się kilka razy !!!)
-    private  void krzyzowanie_wybor_genu(){
-        List<Double> list;
-        int object1,object2;
-
-        for(int j=0;j<wielkosc_populacji_poczatkowa*szansa_na_skrzyzowanie;j++) {
-            object1 = (int) round(random() * (wielkosc_populacji_poczatkowa - 1));
-            object2 = (int) round(random() * (wielkosc_populacji_poczatkowa - 1));
-            list=new ArrayList<>();
-            for (int i = 0; i < wymiar; i++)
-                if (random() < 0.5)
-                    list.add(lista_osobnikow.get(object1).getPunkt(i));
-                 else
-                    list.add(lista_osobnikow.get(object2).getPunkt(i));
-
-            lista_osobnikow.add(new Object_pop(list, sigma));
-        }
-    }
-    //**************************************************************************************************************************************
 
     //funkcja krzyżowania osobników przez średnią odpowiadających genów od rodziców i danie wyniku dziecku potomstwu (czasem jeden osobnik może skrzyżować się kilka razy !!!)
     private void krzyzowanie_srednia_genu(){
