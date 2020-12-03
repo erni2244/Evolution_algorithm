@@ -108,14 +108,15 @@ public class Evolution {
         }
     }
 
+    // to jest bez powtazania się osobników
     private void selekcja_ruletkowa(){
         List<Double> ruletka=new ArrayList<>();
         List<Object_pop> ocaleni=new ArrayList<>();
         double sum=0;
 
         for(int i=0;i<lista_osobnikow.size();i++){
-            ruletka.add(lista_osobnikow.get(i).getOcena());
             lista_osobnikow.get(i).funkcja_oceny();
+            ruletka.add(lista_osobnikow.get(i).getOcena());
             //sum+=lista_osobnikow.get(i).getOcena();
         }
 
