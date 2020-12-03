@@ -12,6 +12,7 @@ public class Chart2D extends JPanel {
 
 
     Plot2DPanel panel;
+    private Object_pop wplyw_ojca;
     private double sigma=4;
 
     public Chart2D() {
@@ -27,7 +28,18 @@ public class Chart2D extends JPanel {
         panel=add_points(make_function(min_x,max_x),lista);
         this.add(panel);
         this.validate();
+        wplyw_ojca = null;
     }
+
+    public void rysuj(List<Object_pop> lista, double min_x, double max_x, double sig,Object_pop wplyw_ojcaw){
+        sigma=sig;
+        this.remove(panel);
+        panel=add_points(make_function(min_x,max_x),lista);
+        this.add(panel);
+        this.validate();
+        wplyw_ojca = wplyw_ojcaw;
+    }
+
 
     private Plot2DPanel add_points(Plot2DPanel plot2DPanel, List<Object_pop> lista){
         double[] x=new double[lista.size()];
@@ -37,7 +49,7 @@ public class Chart2D extends JPanel {
             //for(int j=0;j<lista.get(i).sizeof();j++)
                 //x[i]+=lista.get(i).getPunkt(j);
             x[i]+=lista.get(i).getPunkt(0);
-            lista.get(i).funkcja_oceny();
+            lista.get(i).funkcja_oceny(wplyw_ojca);
             y[i]=lista.get(i).getOcena();
         }
         plot2DPanel.addScatterPlot("punkty",x,y);
@@ -69,9 +81,11 @@ public class Chart2D extends JPanel {
 
     private double[] fun(double[] x){
         double[] y=new double[x.length];
-        System.out.println(""+sigma);
         for(int i=0;i<x.length;i++)
-            y[i]=exp(-5*(x[i]*x[i]))+2*exp(-5*(pow(x[i]-sigma,2)  ));
+            if(wplyw_ojca!=null)
+                y[i]=exp(-5*(x[i]*x[i]))+2*exp(-5*(pow(x[i]-sigma,2)  ))   +0.05*exp(-5*pow(x[i]-wplyw_ojca.getPunkt(0),2));
+            else
+                y[i]=exp(-5*(x[i]*x[i]))+2*exp(-5*(pow(x[i]-sigma,2)  ));
         return y;
     }
 

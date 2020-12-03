@@ -50,16 +50,27 @@ public class Evolution {
 
     }
 
+    public Object_pop getnajlepszy(){
+        Object_pop ob=lista_osobnikow.get(0);
+        for (Object_pop object : lista_osobnikow)
+            if(object.getOcena()>ob.getOcena())
+                ob=object;
+        //zapisz_wplyw_ojca(ob);
+        return ob;
+    }
+
+    //private void zapisz_wplyw_ojca(Object_pop najlepszy){
+        //for (Object_pop ob : lista_osobnikow)
+            //ob.setNaj(najlepszy);
+    //}
 
     private boolean cross_saddle(double procent){
         int ile_przeszło=0;
-        for(int i=0;i<lista_osobnikow.size();i++)
-            if(lista_osobnikow.get(i).getOcena()>1.1)
+        for (Object_pop object_pop : lista_osobnikow)
+            if (object_pop.getOcena() > 1.1)
                 ile_przeszło++;
 
-        if(ile_przeszło>(double)lista_osobnikow.size()*procent)
-            return true;
-        return false;
+        return ile_przeszło > (double) lista_osobnikow.size() * procent;
     }
 
 
@@ -88,7 +99,7 @@ public class Evolution {
         for(int i=0;i<lista_osobnikow.size();i++){
             for(int j=0;j<wymiar;j++)
                 lista_osobnikow.get(i).setPunkt(losoj_nowy(lista_osobnikow.get(i).getPunkt(j),wielkosc_mutacji),j);
-            lista_osobnikow.get(i).funkcja_oceny();
+            lista_osobnikow.get(i).funkcja_oceny(getnajlepszy());
         }
     }
 
@@ -115,7 +126,7 @@ public class Evolution {
         double sum=0;
 
         for(int i=0;i<lista_osobnikow.size();i++){
-            lista_osobnikow.get(i).funkcja_oceny();
+            lista_osobnikow.get(i).funkcja_oceny(getnajlepszy());
             ruletka.add(lista_osobnikow.get(i).getOcena());
             //sum+=lista_osobnikow.get(i).getOcena();
         }

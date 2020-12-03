@@ -101,9 +101,8 @@ public class Controller {
 
 
     public void Start_click(ActionEvent actionEvent) {
-        //for(int i=0;i<200;i++)
         evolution.iteracja();
-        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma());
+        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
     }
 
     public void OdNowa_click(ActionEvent actionEvent) {
@@ -114,7 +113,7 @@ public class Controller {
         try { evolution.setWielkosc_mutacji(Double.parseDouble(mutacja_text.getText())); }catch (Exception e){evolution.setWielkosc_mutacji(0.25);}
         try { evolution.setSigma(Double.parseDouble(sigma_text.getText())); }catch (Exception e){evolution.setSigma(1);}
         evolution.losuj_populacje_o_wymiaze();
-        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma());
+        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
     }
 
 
@@ -126,7 +125,7 @@ public class Controller {
                     while (thread_start==true){
                         if(evolution.iteracja())
                             break;
-                        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma());
+                        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
                         try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
                     }
                     thread_start=false;
