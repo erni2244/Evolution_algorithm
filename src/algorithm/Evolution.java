@@ -39,9 +39,9 @@ public class Evolution {
         if(lista_osobnikow==null)
             losuj_populacje_o_wymiaze();
         mutacja();
-        //krzyzowanie_wybor_genu();
         krzyzowanie_srednia_genu();
-        selekcja_ruletkowa();
+        //selekcja_ruletkowa();
+        selekcja_best();
         collectData.incerment_iteracje();
         if(cross_saddle(0.5))
             return collectData.zapis();
@@ -55,14 +55,9 @@ public class Evolution {
         for (Object_pop object : lista_osobnikow)
             if(object.getOcena()>ob.getOcena())
                 ob=object;
-        //zapisz_wplyw_ojca(ob);
         return ob;
     }
 
-    //private void zapisz_wplyw_ojca(Object_pop najlepszy){
-        //for (Object_pop ob : lista_osobnikow)
-            //ob.setNaj(najlepszy);
-    //}
 
     private boolean cross_saddle(double procent){
         int ile_przeszło=0;
@@ -96,10 +91,10 @@ public class Evolution {
 
     //funkcja mutuje każdy gen każdego osobnika
     private void mutacja(){
-        for(int i=0;i<lista_osobnikow.size();i++){
-            for(int j=0;j<wymiar;j++)
-                lista_osobnikow.get(i).setPunkt(losoj_nowy(lista_osobnikow.get(i).getPunkt(j),wielkosc_mutacji),j);
-            lista_osobnikow.get(i).funkcja_oceny(getnajlepszy());
+        for (Object_pop object_pop : lista_osobnikow) {
+            for (int j = 0; j < wymiar; j++)
+                object_pop.setPunkt(losoj_nowy(object_pop.getPunkt(j), wielkosc_mutacji), j);
+            object_pop.funkcja_oceny(getnajlepszy());
         }
     }
 
@@ -119,23 +114,22 @@ public class Evolution {
         }
     }
 
-    // to jest bez powtazania się osobników
+    // to jest bez powtazania się osobników rodzice przechodza
     private void selekcja_ruletkowa(){
         List<Double> ruletka=new ArrayList<>();
         List<Object_pop> ocaleni=new ArrayList<>();
-        double sum=0;
+        double sum;
 
-        for(int i=0;i<lista_osobnikow.size();i++){
-            lista_osobnikow.get(i).funkcja_oceny(getnajlepszy());
-            ruletka.add(lista_osobnikow.get(i).getOcena());
+        for (Object_pop object_pop : lista_osobnikow) {
+            object_pop.funkcja_oceny(getnajlepszy());
+            ruletka.add(object_pop.getOcena());
             //sum+=lista_osobnikow.get(i).getOcena();
         }
 
         double actual_sum,los;
         while (ocaleni.size()<wielkosc_populacji_poczatkowa){
             sum=0;
-            for(int i=0;i<lista_osobnikow.size();i++)
-                sum+=lista_osobnikow.get(i).getOcena();
+            for (Object_pop object_pop : lista_osobnikow) sum += object_pop.getOcena();
 
             los=random()*sum;
             actual_sum=0;
@@ -153,6 +147,24 @@ public class Evolution {
         }
         lista_osobnikow=ocaleni;
     }
+
+
+    private void selekcja_best(){
+        List<Object_pop> ocaleni=new ArrayList<>();
+
+        while (ocaleni.size()<wielkosc_populacji_poczatkowa) {
+            Object_pop max=lista_osobnikow.get(0);
+            for (Object_pop object_pop : lista_osobnikow)
+                if (object_pop.getOcena()>max.getOcena())
+                    max=object_pop;
+                ocaleni.add(max);
+                lista_osobnikow.remove(max);
+        }
+        System.out.println(""+ocaleni.size());
+        lista_osobnikow.clear();
+        lista_osobnikow=ocaleni;
+    }
+
 
 
 }
