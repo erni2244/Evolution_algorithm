@@ -47,7 +47,7 @@
                                     <TextField fx:id="wielkosc_text" layoutX="84.0" layoutY="47.0" minHeight="25.0" minWidth="70.0" onKeyPressed="#wielkosc_text_key_pressed" prefHeight="25.0" prefWidth="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
                                     <Label layoutX="24.0" layoutY="18.0" text="Wymiar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                     <Label layoutX="24.0" layoutY="51.0" text="Wielkość" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="35.0" />
-                                    <Label layoutX="17.0" layoutY="82.0" text="Punkt losowania" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="65.0" />
+                                    <Label layoutX="17.0" layoutY="82.0" text="Punkt początkowy" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="65.0" />
                                     <TextField fx:id="punkt0_text" layoutX="85.0" layoutY="78.0" minHeight="25.0" minWidth="70.0" onKeyPressed="#punkt0_text_key_pressed" prefHeight="25.0" prefWidth="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                     <TextField fx:id="sigma_text" layoutX="46.0" layoutY="96.0" minHeight="25.0" minWidth="70.0" onKeyPressed="#sigma_text_key_pressed" prefHeight="25.0" prefWidth="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
                                     <Label layoutX="42.0" layoutY="100.0" text="Sigma" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="90.0" />
@@ -55,22 +55,22 @@
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <Button fx:id="Start" layoutX="18.0" layoutY="340.0" mnemonicParsing="false" onAction="#Start_click" text="Start" />
+                        <Button fx:id="Start" layoutX="18.0" layoutY="340.0" mnemonicParsing="false" onAction="#Start_click" text="Jeden krok" />
                         <Button fx:id="OdNowa" layoutX="119.0" layoutY="340.0" mnemonicParsing="false" onAction="#OdNowa_click" text="Od nowa" />
-                        <Button fx:id="AutoStart" layoutX="18.0" layoutY="377.0" mnemonicParsing="false" onAction="#AutoStart_click" text="Auto start" />
-                        <Button fx:id="AutoStop" layoutX="116.0" layoutY="377.0" mnemonicParsing="false" onAction="#AutoStop_click" text="Auto Stop" />
+                        <Button fx:id="AutoStart" layoutX="18.0" layoutY="377.0" mnemonicParsing="false" onAction="#AutoStart_click" text="Praca ciągła" />
+                        <Button fx:id="AutoStop" layoutX="116.0" layoutY="377.0" mnemonicParsing="false" onAction="#AutoStop_click" text="Stop pracy" />
                         <TitledPane animated="false" collapsible="false" layoutX="-1.0" layoutY="159.0" text="Ewolucja" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="155.0">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="200.0" prefHeight="70.0" prefWidth="200.0">
+                            <AnchorPane minHeight="0.0" minWidth="200.0" prefHeight="120.0" prefWidth="200.0">
                                  <children>
                                     <TextField fx:id="krzyzowanie_text" layoutX="37.0" layoutY="14.0" minHeight="25.0" minWidth="70.0" onKeyPressed="#Krzyzowanie_text_key_pressed" prefHeight="25.0" prefWidth="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <TextField fx:id="mutacja_text" layoutX="37.0" layoutY="45.0" minHeight="25.0" minWidth="70.0" onKeyPressed="#Mutacja_text_key_pressed" prefHeight="25.0" prefWidth="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
                                     <Label layoutX="32.0" layoutY="14.0" text="Krzyżowanie" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Label layoutX="43.0" layoutY="44.0" text="Mutacja" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                                    <CheckBox fx:id="wplyw_najlepszego" layoutX="10.0" layoutY="70.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="Czy najlepszy wpływa na otoczenie" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0" />
                                  </children></AnchorPane>
                           </content>
                         </TitledPane>
-                        <VBox prefHeight="200.0" prefWidth="100.0" />
                      </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>

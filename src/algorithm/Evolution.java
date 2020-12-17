@@ -3,23 +3,22 @@ package algorithm;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import static java.lang.StrictMath.*;
 
 public class Evolution {
 
-    private int wielkosc_populacji_poczatkowa=100;
+    private int wielkosc_populacji_poczatkowa=20;
     private double wielkosc_mutacji = 0.15;      //ile procęt populacji zmutuje podane w %
     private double szansa_na_skrzyzowanie=0.5;  //szansa na to czy dana para sie zkrzyżuje podana w %
     private List<Object_pop> lista_osobnikow;
-    private int wymiar=2;       //wymiar jest o jeden mniej bo trzecia wartość to ocena więc zamiast (x; y; z) jest (x; y; ocena)
+    private int wymiar=2;       //wymiar jest o jeden mniej bo jedna wartość to ocena więc zamiast (x; y;) jest (x; ocena)
     private double sigma=1;
     private double mediana_normrand=0;
-    private double min_value=mediana_normrand-3;
-    private double max_value=mediana_normrand+3;
+    private double min_value=mediana_normrand-10;
+    private double max_value=mediana_normrand+10;
     private CollectData collectData;
     private boolean czy_zapisano=false;
-
+    private boolean wplyw_najlepszego = false;
     //*******setery************
     public void setWielkosc_populacji(int wielkosc_populacji) { this.wielkosc_populacji_poczatkowa = wielkosc_populacji; }
     public void setWymiar(int wymiar) { this.wymiar = wymiar-1;}
@@ -27,6 +26,7 @@ public class Evolution {
     public void setSzansa_na_skrzyzowanie(double szansa_na_skrzyzowanie) { this.szansa_na_skrzyzowanie = szansa_na_skrzyzowanie; }
     public void setWielkosc_mutacji(double wielkosc_mutacji) { this.wielkosc_mutacji = wielkosc_mutacji; }
     public void setSigma(double sigma) { this.sigma = sigma; }
+    public void setWplyw_najlepszego(boolean wplyw_najlepszego) { this.wplyw_najlepszego = wplyw_najlepszego; }
 
     public List<Object_pop> getLista_osobnikow() { return lista_osobnikow; }
     public double getMin_value() { return min_value; }
@@ -40,8 +40,7 @@ public class Evolution {
             losuj_populacje_o_wymiaze();
         mutacja();
         krzyzowanie_srednia_genu();
-        //selekcja_ruletkowa();
-        selekcja_best();
+        selekcja_ruletkowa();
         collectData.incerment_iteracje();
         if(cross_saddle(0.5))
             return collectData.zapis();
@@ -73,7 +72,6 @@ public class Evolution {
         return (new Random().nextGaussian()*sig)+mediana;  //normalny
     }
 
-    // losuje nowa populacje o zadanej wielkosci i ''wstawia pod lista_osobnikow''
     public void losuj_populacje_o_wymiaze(){
         czy_zapisano=false;
         lista_osobnikow= new ArrayList<>();
@@ -94,10 +92,12 @@ public class Evolution {
         for (Object_pop object_pop : lista_osobnikow) {
             for (int j = 0; j < wymiar; j++)
                 object_pop.setPunkt(losoj_nowy(object_pop.getPunkt(j), wielkosc_mutacji), j);
-            object_pop.funkcja_oceny(getnajlepszy());
+            if(wplyw_najlepszego)
+                object_pop.funkcja_oceny(getnajlepszy());
+            else
+                object_pop.funkcja_oceny(null);
         }
     }
-
 
     //funkcja krzyżowania osobników przez średnią odpowiadających genów od rodziców i danie wyniku dziecku potomstwu (czasem jeden osobnik może skrzyżować się kilka razy !!!)
     private void krzyzowanie_srednia_genu(){
@@ -121,7 +121,10 @@ public class Evolution {
         double sum;
 
         for (Object_pop object_pop : lista_osobnikow) {
-            object_pop.funkcja_oceny(getnajlepszy());
+            if(wplyw_najlepszego)
+                object_pop.funkcja_oceny(getnajlepszy());
+            else
+                object_pop.funkcja_oceny(null);
             ruletka.add(object_pop.getOcena());
             //sum+=lista_osobnikow.get(i).getOcena();
         }
@@ -147,24 +150,6 @@ public class Evolution {
         }
         lista_osobnikow=ocaleni;
     }
-
-
-    private void selekcja_best(){
-        List<Object_pop> ocaleni=new ArrayList<>();
-
-        while (ocaleni.size()<wielkosc_populacji_poczatkowa) {
-            Object_pop max=lista_osobnikow.get(0);
-            for (Object_pop object_pop : lista_osobnikow)
-                if (object_pop.getOcena()>max.getOcena())
-                    max=object_pop;
-                ocaleni.add(max);
-                lista_osobnikow.remove(max);
-        }
-        System.out.println(""+ocaleni.size());
-        lista_osobnikow.clear();
-        lista_osobnikow=ocaleni;
-    }
-
 
 
 }

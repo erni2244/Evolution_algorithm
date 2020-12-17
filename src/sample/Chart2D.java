@@ -17,18 +17,8 @@ public class Chart2D extends JPanel {
 
     public Chart2D() {
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        panel=make_function(-3,3);
+        panel=make_function(-10,10);
 
-    }
-
-
-    public void rysuj(List<Object_pop> lista, double min_x, double max_x, double sig){
-        sigma=sig;
-        this.remove(panel);
-        panel=add_points(make_function(min_x,max_x),lista);
-        this.add(panel);
-        this.validate();
-        wplyw_ojca = null;
     }
 
     public void rysuj(List<Object_pop> lista, double min_x, double max_x, double sig,Object_pop wplyw_ojcaw){
@@ -45,9 +35,6 @@ public class Chart2D extends JPanel {
         double[] x=new double[lista.size()];
         double[] y=new double[lista.size()];
         for(int i=0;i<lista.size();i++){
-            //x[i]=0;
-            //for(int j=0;j<lista.get(i).sizeof();j++)
-                //x[i]+=lista.get(i).getPunkt(j);
             x[i]+=lista.get(i).getPunkt(0);
             lista.get(i).funkcja_oceny(wplyw_ojca);
             y[i]=lista.get(i).getOcena();
@@ -71,6 +58,7 @@ public class Chart2D extends JPanel {
         }
         double krok=0.1;
         double n=min_x-krok;
+        //System.out.println(""+max_x+" "+min_x+" "+((abs(max_x-min_x)/krok)+1));
         double[] x = new double[(int) (abs(max_x-min_x)/krok)+1];
         for(int i=0;n<=max_x-(krok/2);i++){                                     //odejmuje krok/2 bo przez zaokrąglenia wychodzi poza rozmiar tablicy czasem
             n=n+krok;

@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
@@ -29,6 +30,8 @@ public class Controller {
     private TextField krzyzowanie_text;
     @FXML
     private TextField mutacja_text;
+    @FXML
+    private CheckBox wplyw_najlepszego;
 
     @FXML
     public void initialize(){
@@ -101,9 +104,12 @@ public class Controller {
 
 
     public void Start_click(ActionEvent actionEvent) {
+        evolution.setWplyw_najlepszego(wplyw_najlepszego.isSelected());
         evolution.iteracja();
-        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
-    }
+        if(wplyw_najlepszego.isSelected())
+            chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
+        else
+            chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),null);    }
 
     public void OdNowa_click(ActionEvent actionEvent) {
         try{ evolution.setWymiar(Integer.parseInt(wymiar_text.getText()));}catch (Exception e){ evolution.setWymiar(3); }
@@ -113,7 +119,7 @@ public class Controller {
         try { evolution.setWielkosc_mutacji(Double.parseDouble(mutacja_text.getText())); }catch (Exception e){evolution.setWielkosc_mutacji(0.25);}
         try { evolution.setSigma(Double.parseDouble(sigma_text.getText())); }catch (Exception e){evolution.setSigma(1);}
         evolution.losuj_populacje_o_wymiaze();
-        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
+        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),null);
     }
 
 
@@ -123,9 +129,13 @@ public class Controller {
             Thread thread=new Thread(){
                 public void run(){
                     while (thread_start==true){
+                        evolution.setWplyw_najlepszego(wplyw_najlepszego.isSelected());
                         if(evolution.iteracja())
                             break;
-                        chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
+                        if(wplyw_najlepszego.isSelected())
+                            chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),evolution.getnajlepszy());
+                        else
+                            chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),null);
                         try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
                     }
                     thread_start=false;
