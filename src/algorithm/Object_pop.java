@@ -31,11 +31,13 @@ public class Object_pop {
 
     public void funkcja_oceny(Object_pop naj){
         double sum1=0,sum2=0,sum3=0;
+        int i=0;
         for (Double aDouble : punkty) {
             sum1 += pow(aDouble, 2);
             sum2 += pow(aDouble - r, 2);
             if (naj != null)
-                sum3 += pow(aDouble - naj.getPunkt(0), 2);
+                sum3 += pow(aDouble - naj.getPunkt(i), 2);
+            i++;
         }
         if(naj!=null)
             ocena= (exp(-5*sum1)+2*exp(-5*sum2))   +0.05*exp(-5*sum3);

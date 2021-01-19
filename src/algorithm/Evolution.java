@@ -8,8 +8,8 @@ import static java.lang.StrictMath.*;
 public class Evolution {
 
     private int wielkosc_populacji_poczatkowa=20;
-    private double wielkosc_mutacji = 0.15;      //ile procęt populacji zmutuje podane w %
-    private double szansa_na_skrzyzowanie=0.5;  //szansa na to czy dana para sie zkrzyżuje podana w %
+    private double wielkosc_mutacji = 0.15;      
+    private double szansa_na_skrzyzowanie=0.5;
     private List<Object_pop> lista_osobnikow;
     private int wymiar=2;       //wymiar jest o jeden mniej bo jedna wartość to ocena więc zamiast (x; y;) jest (x; ocena)
     private double sigma=1;

@@ -112,7 +112,7 @@ public class Controller {
             chart.rysuj(evolution.getLista_osobnikow(),evolution.getMin_value(),evolution.getMax_value(),evolution.getSigma(),null);    }
 
     public void OdNowa_click(ActionEvent actionEvent) {
-        try{ evolution.setWymiar(Integer.parseInt(wymiar_text.getText()));}catch (Exception e){ evolution.setWymiar(3); }
+        try{ evolution.setWymiar(Integer.parseInt(wymiar_text.getText())+1);}catch (Exception e){ evolution.setWymiar(3); } //tu dodaje +1 rozmiar na ocene
         try{evolution.setWielkosc_populacji(Integer.parseInt(wielkosc_text.getText()));}catch (Exception e){evolution.setWielkosc_populacji(20);}
         try { evolution.setMediana_normrand(Double.parseDouble(punkt0_text.getText())); }catch (Exception e){evolution.setMediana_normrand(0);}
         try { evolution.setSzansa_na_skrzyzowanie(Double.parseDouble(krzyzowanie_text.getText())); }catch (Exception e){evolution.setSzansa_na_skrzyzowanie(0.5);}
